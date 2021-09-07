@@ -1,6 +1,6 @@
 <div align="center">
     <a href="https://lamp.sh/" target="_blank">
-        <img alt="LAMP" src="https://github.com/teddysun/lamp/blob/master/conf/lamp.png">
+        <img alt="LAMP" src="https://github.com/vanjack/lamp/blob/master/conf/lamp.png">
     </a>
 </div>
 
@@ -111,7 +111,7 @@
 - If your server system: Amazon Linux/CentOS/RedHat
 ```bash
 yum -y install wget git
-git clone https://github.com/teddysun/lamp.git
+git clone https://github.com/vanjack/lamp.git
 cd lamp
 chmod 755 *.sh
 ./lamp.sh
@@ -120,7 +120,7 @@ chmod 755 *.sh
 - If your server system: Debian/Ubuntu
 ```bash
 apt-get -y install wget git
-git clone https://github.com/teddysun/lamp.git
+git clone https://github.com/vanjack/lamp.git
 cd lamp
 chmod 755 *.sh
 ./lamp.sh
