@@ -138,6 +138,13 @@ disable_selinux(){
     fi
 }
 
+enable_selinux(){
+    if [ -s /etc/selinux/config ] && grep 'SELINUX=disabled' /etc/selinux/config; then
+        sed -i 's/SELINUX=enforcing/SELINUX=enforcing/g' /etc/selinux/config
+        setenforce 0
+    fi
+}
+
 #Display Memu
 display_menu(){
     local soft="$1"
@@ -753,6 +760,8 @@ firewall_set(){
             default_zone="$(firewall-cmd --get-default-zone)"
             firewall-cmd --permanent --zone=${default_zone} --add-service=http > /dev/null 2>&1
             firewall-cmd --permanent --zone=${default_zone} --add-service=https > /dev/null 2>&1
+            firewall-cmd --permanent --zone=${default_zone} --add-service=mysqld > /dev/null 2>&1
+            firewall-cmd --permanent --zone=${default_zone} --add-service=ntp > /dev/null 2>&1
             firewall-cmd --reload > /dev/null 2>&1
         else
             _warn "firewalld looks like not running, please manually set if necessary."
@@ -777,9 +786,9 @@ remove_packages(){
 
 sync_time(){
     _info "Sync time..."
-    is_exist "ntpdate" && ntpdate -bv cn.pool.ntp.org
+    is_exist "ntpdate" && ntpdate a.ntp.br
     rm -f /etc/localtime
-    ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    ln -s /usr/share/zoneinfo/American/Bahia /etc/localtime
     _info "Sync time completed..."
     StartDate=$(date "+%Y-%m-%d %H:%M:%S")
     StartDateSecond=$(date +%s)
@@ -970,6 +979,8 @@ EOF
         /usr/bin/mysql -uroot -p${dbrootpwd} < ${web_root_dir}/phpmyadmin/sql/create_tables.sql > /dev/null 2>&1
     fi
 
+    enable_selinux
+
     sleep 1
     netstat -tunlp
     echo
@@ -1010,7 +1021,7 @@ install_tools(){
         else
             error_detect_depends "yum -y install python"
             error_detect_depends "yum -y install python-devel"
-            error_detect_depends "yum -y install ntpdate"
+            error_detect_depends "yum -y install ntp ntpdate ntp-doc"
         fi
     fi
     _info "Install development tools completed..."
