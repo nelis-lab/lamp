@@ -8,6 +8,8 @@
 
 This repository is a copy of the https://github.com/teddysun/lamp.git
 
+---
+
 [LAMP](https://lamp.sh/) is a powerful bash script for the installation of Apache + PHP + MySQL/MariaDB and so on. You can install Apache + PHP + MySQL/MariaDB in an very easy way, just need to choose what you want to install before installation. And all things will be done in few minutes.
 
 - [Supported System](#supported-system)
